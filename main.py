@@ -49,10 +49,25 @@ cursor = conexao.cursor()
 # conexao.commit()
 
 #Atulizar dados no banco
-cursor.execute("""
-UPDATE alunos
-SET idade = ?, curso = ?
-WHERE id = ?                       
-""", (30, "ADS", 1)
-)
-conexao.commit()
+# cursor.execute("""
+# UPDATE alunos
+# SET idade = ?, curso = ?
+# WHERE id = ?                       
+# """, (30, "ADS", 1)
+# )
+# conexao.commit()
+
+#Funçao de listar dados no banco
+#Cunsultar os dados nno banco
+cursor.execute(" SELECT * FROM alunos")
+
+#Fetchall traz todos as linhas da consulta
+for linha in cursor.fetchall():
+    print(f"ID: {linha[0]} | Nome: {linha[1]} | idade: {linha[2]} | Curso: {linha[3]}")
+print("-"*50)
+
+pesquisar = input("Digite o curso que deseja pesquisar os alunos: ")
+cursor.execute(" SELECT nome, idade FROM alunos WHERE curso = ?", (pesquisar,))
+print(f"Alunos do curso de {pesquisar}")
+for linha in cursor.fetchall():
+    print(f"Nome: {linha[0]} | idade: {linha[1]}")
